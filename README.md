@@ -3,6 +3,8 @@
 ## [大氣科學小幫手 Atmospheric Sciences Helper](https://tcntp.github.io/final-project/index.html)
 
 ### 網站架構及功能
+ - 整體功能
+   + 
  - 導覽列
    + 點擊連結可滑動至該區塊
  - 介紹視窗
