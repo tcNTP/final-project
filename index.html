@@ -225,6 +225,18 @@
                             <td>$$T(\frac{P_{0}}{P})^{\frac{R_{d}}{c_{p}}}$$</td>
                             <td>$$K$$</td>
                         </tr>
+                        <tr>
+                            <td>Equivalent Potential Temperature</td>
+                            <td>$$\theta_{e}$$</td>
+                            <td>$$T\ exp(\frac{L\ W_{s}}{c_{p}\ T_{d}})(\frac{P_{0}}{P})^{\frac{R_{d}}{c_{p}}}$$</td>
+                            <td>$$K$$</td>
+                        </tr>
+                        <tr>
+                            <td>Dewpoint Temperature</td>
+                            <td>$$T_{d}$$</td>
+                            <td>$$\frac{243.5 * \ln{\frac{e}{6.112}}}{17.67 - \ln{\frac{e}{6.112}}}$$</td>
+                            <td>$$°C$$</td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
@@ -266,7 +278,7 @@
                         <tr>
                             <td>Water Vapor</td>
                             <td>$$e$$</td>
-                            <td>$$6.112exp[18.678 - \frac{T-273.15}{234.5} * \frac{T}{257.14 + (T-273.15)}]$$</td>
+                            <td>$$\frac{pqR_{v}}{q(1 - R_{d})+R_{d}}$$</td>
                             <td>$$hPa$$</td>
                         </tr>
                         <tr>
@@ -292,8 +304,10 @@
                     <h5 class="dropdown-header">Temperature</h5>
                     <div class="dropdown-item" id="v-temp-selector">Virtual Temperature</div>
                     <div class="dropdown-item" id="p-temp-selector">Potential Temperature</div>
+                    <div class="dropdown-item" id="dp-temp-selector">Dewpoint Temperature</div>
                     <h5 class="dropdown-header">Water</h5>
-                    <div class="dropdown-item" id="swv-selector">Saturation Vapor Pressure</div>
+                    <div class="dropdown-item" id="wv-selector">Water Vapor Pressure</div>
+                    <div class="dropdown-item" id="swv-selector">Saturation Water Vapor Pressure</div>
                     <div class="dropdown-item" id="smr-selector">Saturation Mixing Ratio</div>
                 </div>
             </div>
@@ -334,6 +348,46 @@
                     </div>
                 </div>
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="ptcalc()">
+                    Calculate
+                </button>
+            </div>
+            <div class="mb-3" id="dp-temp">
+                <h3 class="font-cus1">Water Vapor</h3>
+                <label for="dpt-p">Pressure:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Please input pressure" id="dpt-p" name="Pressure">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Unit: hPa</span>
+                    </div>
+                </div>
+                <label for="dpt-q">Specific Humidity:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Please input specific humidity" id="dpt-q" name="SH">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Unit: kg/kg</span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="dptcalc()">
+                    Calculate
+                </button>
+            </div>
+            <div class="mb-3" id="wv">
+                <h3 class="font-cus1">Water Vapor</h3>
+                <label for="wv-p">Pressure:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Please input pressure" id="wv-p" name="Pressure">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Unit: hPa</span>
+                    </div>
+                </div>
+                <label for="wv-q">Specific Humidity:</label>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Please input specific humidity" id="wv-q" name="SH">
+                    <div class="input-group-append">
+                        <span class="input-group-text">Unit: kg/kg</span>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="wvpcalc()">
                     Calculate
                 </button>
             </div>
@@ -460,25 +514,49 @@
     <script>
         $("#p-temp-selector").click(function(){
             $("#v-temp").hide();
+            $("#dp-temp").hide();
+            $("#wv").hide();
             $("#swv").hide();
             $("#smr").hide();
             $("#p-temp").fadeIn("slow").show();
         });
         $("#v-temp-selector").click(function(){
             $("#p-temp").hide();
+            $("#dp-temp").hide();
+            $("#wv").hide();
             $("#swv").hide();
             $("#smr").hide();
             $("#v-temp").fadeIn("slow").show();
         });
+        $("#dp-temp-selector").click(function(){
+            $("#p-temp").hide();
+            $("#v-temp").hide();
+            $("#wv").hide();
+            $("#swv").hide();
+            $("#smr").hide();
+            $("#dp-temp").fadeIn("slow").show();
+        });
+        $("#wv-selector").click(function(){
+            $("#v-temp").hide();
+            $("#p-temp").hide();
+            $("#dp-temp").hide();
+            $("#swv").hide();
+            $("#smr").hide();
+            $("#wv").fadeIn("slow").show();
+        });
         $("#swv-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
+            $("#dp-temp").hide();
+            $("#wv").hide();
             $("#smr").hide();
             $("#swv").fadeIn("slow").show();
         });
         $("#smr-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
+            $("#dp-temp").hide();
+            $("#wv").hide();
             $("#swv").hide();
             $("#smr").fadeIn("slow").show();
         });
@@ -504,11 +582,23 @@
             var p = parseFloat(document.getElementById("pt-p").value);
             pt = t*Math.pow((p0/p), (rd/cp));
             document.getElementById("answer").innerHTML = Math.round(pt*1000)/1000+" K";
+        };function dptcalc() {
+            var p = parseFloat(document.getElementById("dpt-p").value);
+            var q = parseFloat(document.getElementById("dpt-q").value);
+            e = p*q*rv/(q*(1-rd)+rd);
+            dpt = (243.5*Math.log(e/6.112))/(17.67-Math.log(e/6.112))
+            document.getElementById("answer").innerHTML = Math.round(dpt*1000)/1000 +" °C";
+        };
+        function wvpcalc() {
+            var p = parseFloat(document.getElementById("wv-p").value);
+            var q = parseFloat(document.getElementById("wv-q").value);
+            e = p*q*rv/(q*(1-rd)+rd);
+            document.getElementById("answer").innerHTML = Math.round(e*1000)/1000 +" hPa";
         };
         function swvpcalc() {
             var t = parseFloat(document.getElementById("swv-t").value);
-            swv = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
-            document.getElementById("answer").innerHTML = Math.round(swv*1000)/1000 +" hPa";
+            es = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
+            document.getElementById("answer").innerHTML = Math.round(es*1000)/1000 +" hPa";
         };
         function smrcalc() {
             var t = parseFloat(document.getElementById("smr-t").value);
