@@ -333,11 +333,12 @@
                     <div class="dropdown-item" id="v-temp-selector">Virtual Temperature</div>
                     <div class="dropdown-item" id="p-temp-selector">Potential Temperature</div>
                     <h5 class="dropdown-header">Water</h5>
-                    <div class="dropdown-item" id="swv-pres-selector">Saturation Vapor Pressure</div>
+                    <div class="dropdown-item" id="swv-selector">Saturation Vapor Pressure</div>
                     <div class="dropdown-item" id="smr-selector">Saturation Mixing Ratio</div>
                 </div>
             </div>
             <div class="mb-3" id="v-temp">
+                <h3 class="font-cus1">Virtual Temperature</h3>
                 <label for="vt-t">Temperature:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input temperature" id="vt-t">
@@ -357,6 +358,7 @@
                 </button>
             </div>
             <div class="mb-3" id="p-temp">
+                <h3 class="font-cus1">Potential Temperature</h3>
                 <label for="vt-t">Temperature:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input temperature" id="pt-t" name="Temperature">
@@ -375,10 +377,11 @@
                     Calculate
                 </button>
             </div>
-            <div class="mb-3" id="swv-pres">
-                <label for="vt-t">Temperature:</label>
+            <div class="mb-3" id="swv">
+                <h3 class="font-cus1">Saturation Water Vapor</h3>
+                <label for="swv-t">Temperature:</label>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Please input temperature" id="swvp-t" name="Temperature">
+                    <input type="text" class="form-control" placeholder="Please input temperature" id="swv-t" name="Temperature">
                     <div class="input-group-append">
                         <span class="input-group-text">Unit: Kelvin</span>
                     </div>
@@ -496,29 +499,29 @@
     <script>
         $("#p-temp-selector").click(function(){
             $("#v-temp").hide();
-            $("#swv-pres").hide();
+            $("#swv").hide();
             $("#smr").hide();
             $("#p-temp").fadeIn("slow");
             $("#p-temp").show();
         });
         $("#v-temp-selector").click(function(){
             $("#p-temp").hide();
-            $("#swv-pres").hide();
+            $("#swv").hide();
             $("#smr").hide();
             $("#v-temp").fadeIn("slow");
             $("#v-temp").show();
         });
-        $("#swv-pres-selector").click(function(){
+        $("#swv-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
             $("#smr").hide();
-            $("#swv-pres").fadeIn("slow");
-            $("#swv-pres").show();
+            $("#swv").fadeIn("slow");
+            $("#swv").show();
         });
         $("#smr-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
-            $("#swv-pres").hide();
+            $("#swv").hide();
             $("#smr").fadeIn("slow");
             $("#smr").show();
         });
@@ -547,9 +550,9 @@
             document.getElementById("result").innerHTML = Math.round(pt*1000)/1000+" K";
         };
         function swvpcalc() {
-            var t = parseFloat(document.getElementById("swvp-t").value);
-            swvp = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
-            document.getElementById("result").innerHTML = Math.round(swvp*1000)/1000 +" hPa";
+            var t = parseFloat(document.getElementById("swv-t").value);
+            swv = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
+            document.getElementById("result").innerHTML = Math.round(swv*1000)/1000 +" hPa";
         };
         function smrcalc() {
             var t = parseFloat(document.getElementById("smr-t").value);
