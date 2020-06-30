@@ -30,6 +30,12 @@ html {
 #p-temp {
     display: none;
 }
+#dp-temp {
+    display: none;
+}
+#wv {
+    display: none;
+}
 #swv {
     display: none;
 }
