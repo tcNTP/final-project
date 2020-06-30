@@ -313,7 +313,7 @@
                         <span class="input-group-text">Unit: kg/kg</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="vtcalc()">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="vtcalc()">
                     Calculate
                 </button>
             </div>
@@ -333,7 +333,7 @@
                         <span class="input-group-text">Unit: hPa</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="ptcalc()">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="ptcalc()">
                     Calculate
                 </button>
             </div>
@@ -346,7 +346,7 @@
                         <span class="input-group-text">Unit: Kelvin</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="swvpcalc()">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="swvpcalc()">
                     Calculate
                 </button>
             </div>
@@ -366,7 +366,7 @@
                         <span class="input-group-text">Unit: hPa</span>
                     </div>
                 </div>
-                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal" onclick="smrcalc()">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#result" onclick="smrcalc()">
                     Calculate
                 </button>
             </div>
@@ -374,7 +374,7 @@
     </section>
 
     <!-- modal -->
-    <div class="modal fade" id="myModal">
+    <div class="modal fade" id="result">
         <div class="modal-dialog">
             <div class="modal-content">
 
@@ -385,7 +385,7 @@
                 </div>
 
                 <!-- Modal body -->
-                <div class="modal-body"><p id="result"></p></div>
+                <div class="modal-body"><p id="answer"></p></div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
@@ -494,26 +494,29 @@
         function vtcalc() {
             var t = parseFloat(document.getElementById("vt-t").value);
             var q = parseFloat(document.getElementById("vt-mr").value);
+            if (parseFloat(document.getElementById("vt-t").value) === "NaN") {
+
+            }
             vt = t*(1+0.608*q);
-            document.getElementById("result").innerHTML = Math.round(vt*1000)/1000+" K";
+            document.getElementById("answer").innerHTML = Math.round(vt*1000)/1000+" K";
         };
         function ptcalc() {
             var t = parseFloat(document.getElementById("pt-t").value);
             var p = parseFloat(document.getElementById("pt-p").value);
             pt = t*Math.pow((p0/p), (rd/cp));
-            document.getElementById("result").innerHTML = Math.round(pt*1000)/1000+" K";
+            document.getElementById("answer").innerHTML = Math.round(pt*1000)/1000+" K";
         };
         function swvpcalc() {
             var t = parseFloat(document.getElementById("swv-t").value);
             swv = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
-            document.getElementById("result").innerHTML = Math.round(swv*1000)/1000 +" hPa";
+            document.getElementById("answer").innerHTML = Math.round(swv*1000)/1000 +" hPa";
         };
         function smrcalc() {
             var t = parseFloat(document.getElementById("smr-t").value);
             var p = parseFloat(document.getElementById("smr-p").value);
             es = 6.112*Math.exp((lv/rv)*((1/273.15)-(1/t)));
             smr = (0.622*es)/(p-es);
-            document.getElementById("result").innerHTML = Math.round(smr*1000)/1000+" kg/kg";
+            document.getElementById("answer").innerHTML = Math.round(smr*1000)/1000+" kg/kg";
         };
     </script>
 
