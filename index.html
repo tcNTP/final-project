@@ -45,6 +45,7 @@
         <div class="text-center font-cus1">
             <h1 class="display-4 text-white">Atmospheric Sciences Helper</h1>
             <h5 class="text-light text-info">Created by NTP Fu.</h5>
+            <a href="#sec-const"><button type="button" class="btn-lg btn-light">Let's Start!</button></a>
         </div>
     </section>
 
@@ -305,7 +306,7 @@
                         <span class="input-group-text">Unit: Kelvin</span>
                     </div>
                 </div>
-                <label for="vt-q">Mixing Ratio:</label>
+                <label for="vt-mr">Mixing Ratio:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input mixing ratio" id="vt-mr">
                     <div class="input-group-append">
@@ -318,14 +319,14 @@
             </div>
             <div class="mb-3" id="p-temp">
                 <h3 class="font-cus1">Potential Temperature</h3>
-                <label for="vt-t">Temperature:</label>
+                <label for="pt-t">Temperature:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input temperature" id="pt-t" name="Temperature">
                     <div class="input-group-append">
                         <span class="input-group-text">Unit: Kelvin</span>
                     </div>
                 </div>
-                <label for="vt-p">Pressure:</label>
+                <label for="pt-p">Pressure:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input Pressure" id="pt-p" name="Pressure">
                     <div class="input-group-append">
@@ -351,14 +352,14 @@
             </div>
             <div class="mb-3" id="smr">
                 <h3 class="font-cus1">Saturation Mixing Ratio</h3>
-                <label for="vt-t">Temperature:</label>
+                <label for="smr-t">Temperature:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input temperature" id="smr-t" name="Temperature">
                     <div class="input-group-append">
                         <span class="input-group-text">Unit: Kelvin</span>
                     </div>
                 </div>
-                <label for="vt-p">Pressure:</label>
+                <label for="smr-p">Pressure:</label>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Please input Pressure" id="smr-p" name="Pressure">
                     <div class="input-group-append">
@@ -439,15 +440,14 @@
 
     <!-- animation script -->
     <script>
-        $('.dropdown').on('show.bs.dropdown', function(e){
+        $('.dropdown').on('show.bs.dropdown', function(){
             var $dropdown = $(this).find('.dropdown-menu');
             var orig_margin_top = parseInt($dropdown.css('margin-top'));
             $dropdown.css({'margin-top': (orig_margin_top + 10) + 'px', opacity: 0}).animate({'margin-top': orig_margin_top + 'px', opacity: 1}, 300, function(){
                 $(this).css({'margin-top':''});
             });
         });
-        // Add slidedown & fadeout animation to dropdown
-        $('.dropdown').on('hide.bs.dropdown', function(e){
+        $('.dropdown').on('hide.bs.dropdown', function(){
             var $dropdown = $(this).find('.dropdown-menu');
             var orig_margin_top = parseInt($dropdown.css('margin-top'));
             $dropdown.css({'margin-top': orig_margin_top + 'px', opacity: 1, display: 'block'}).animate({'margin-top': (orig_margin_top + 10) + 'px', opacity: 0}, 300, function(){
@@ -461,29 +461,25 @@
             $("#v-temp").hide();
             $("#swv").hide();
             $("#smr").hide();
-            $("#p-temp").fadeIn("slow");
-            $("#p-temp").show();
+            $("#p-temp").fadeIn("slow").show();
         });
         $("#v-temp-selector").click(function(){
             $("#p-temp").hide();
             $("#swv").hide();
             $("#smr").hide();
-            $("#v-temp").fadeIn("slow");
-            $("#v-temp").show();
+            $("#v-temp").fadeIn("slow").show();
         });
         $("#swv-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
             $("#smr").hide();
-            $("#swv").fadeIn("slow");
-            $("#swv").show();
+            $("#swv").fadeIn("slow").show();
         });
         $("#smr-selector").click(function(){
             $("#v-temp").hide();
             $("#p-temp").hide();
             $("#swv").hide();
-            $("#smr").fadeIn("slow");
-            $("#smr").show();
+            $("#smr").fadeIn("slow").show();
         });
     </script>
     <!-- calculate script -->
@@ -494,9 +490,7 @@
         const rd = 287.047;
         const rv = 461.5;
         const cp = 1005;
-        const cv = 718;
         const lv = 2500000;
-        const TtoK = 273.15;
         function vtcalc() {
             var t = parseFloat(document.getElementById("vt-t").value);
             var q = parseFloat(document.getElementById("vt-mr").value);
