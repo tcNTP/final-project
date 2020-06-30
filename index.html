@@ -494,9 +494,6 @@
         function vtcalc() {
             var t = parseFloat(document.getElementById("vt-t").value);
             var q = parseFloat(document.getElementById("vt-mr").value);
-            if (parseFloat(document.getElementById("vt-t").value) === "NaN") {
-
-            }
             vt = t*(1+0.608*q);
             document.getElementById("answer").innerHTML = Math.round(vt*1000)/1000+" K";
         };
