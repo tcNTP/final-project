@@ -39,5 +39,10 @@
    + 列出個人社交媒體資訊
    + Copyright 資訊
 
+### 新增功能與更新
+
+#### 2020-07-01 Wed.
+ - 新增 Back to top 功能
+
 ### 參考資料
  - [W3Schools](https://www.w3schools.com/)

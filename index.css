@@ -1,5 +1,6 @@
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 70px;
 }
 .table-content {
     display: block;
@@ -26,6 +27,17 @@ html {
 }
 .dropdown-item:hover {
     cursor: pointer;
+}
+#btt {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    outline: none;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 10px;
 }
 #p-temp {
     display: none;

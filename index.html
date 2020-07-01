@@ -24,7 +24,7 @@
 </head>
 <body>
     <!-- navbar -->
-    <nav class="navbar navbar-expand-sm navbar-dark nav-bg">
+    <nav class="navbar navbar-expand-sm navbar-dark nav-bg fixed-top">
         <a class="navbar-brand" href="https://tcntp.github.io/final-project/index.html"><i class="fas fa-cloud"></i></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="navbar-toggler-icon"></span>
@@ -450,6 +450,9 @@
         </div>
     </div>
 
+    <!-- back to top btn-->
+    <button class="btn btn-warning" id="btt" title="Go to top" onclick="topFunction()">Top</button>
+
     <!-- footer -->
     <div class="jumbotron" id="footer" style="margin-bottom:0">
         <div class="container">
@@ -508,6 +511,29 @@
                 $(this).css({'margin-top':'', display:''});
             });
         });
+        $('.navbar-collapse a').click(function(){
+            $(".navbar-collapse").collapse('hide');
+        });
+    </script>
+
+    <!-- back to top function -->
+    <script>
+        var mybtn = document.getElementById("btt");
+
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybtn.style.display = "block";
+            } else {
+                mybtn.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
     </script>
 
     <!-- select calculator -->
